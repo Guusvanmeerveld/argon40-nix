@@ -16,9 +16,9 @@
       #   default = import ./modules/home-manager.nix;
       # };
 
-      # nixosModules = {
-      #   default = import ./modules/nixos.nix;
-      # };
+      nixosModules = {
+        default = import ./modules/nixos.nix;
+      };
 
       overlays = {
         argonone = final: _prev: {
