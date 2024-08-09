@@ -1,0 +1,42 @@
+name: Update if python files have updated
+
+on:
+  schedule:
+    - cron: "0 0 * * 0"
+  workflow_dispatch:
+
+jobs:
+  run-script-and-create-pr:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Download newest files
+        run: |
+          echo "Downloading new files from Argon40 download server"
+          ./update.sh
+
+      - name: Check for changes in files
+        id: check_changes
+        run: |
+          # Check for any changes in the src directory
+          if git diff --quiet src; then
+            echo "No changes detected in src directory."
+            echo "changed=false" >> $GITHUB_ENV
+          else
+            echo "Changes detected in src directory."
+            echo "changed=true" >> $GITHUB_ENV
+          fi
+
+      - name: Create Pull Request
+        if: env.changed == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: bot/update
+          delete-branch: true
+          commit-message: "Auto-update: files have changed"
+          title: "Auto-update: files have changed"
+          body: "This PR was created automatically by a scheduled GitHub Action."
+          labels: ["auto-update"]

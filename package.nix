@@ -18,7 +18,7 @@
     in ''
       mkdir -p ${outPath}/lib/share
 
-      cp src/argon* ${outPath}/lib/share/
+      cp src/argon*.py ${outPath}/lib/share/
     '';
   };
 in

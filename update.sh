@@ -2,8 +2,10 @@ ARGONDOWNLOADSERVER=https://download.argon40.com
 
 CHECKGPIOMODE=libgpiod
 
-wget $ARGONDOWNLOADSERVER/scripts/argononed.py -O src/argononed.py
-wget $ARGONDOWNLOADSERVER/scripts/argonregister.py -O src/argonregister.py
-wget $ARGONDOWNLOADSERVER/scripts/argonsysinfo.py -O src/argonsysinfo.py
-wget "$ARGONDOWNLOADSERVER/scripts/argonpowerbutton-${CHECKGPIOMODE}.py" -O src/argonpowerbutton.py
+SOURCE_DIR=src
+
+wget $ARGONDOWNLOADSERVER/scripts/argononed.py -O $SOURCE_DIR/argononed.py
+wget $ARGONDOWNLOADSERVER/scripts/argonregister.py -O $SOURCE_DIR/argonregister.py
+wget $ARGONDOWNLOADSERVER/scripts/argonsysinfo.py -O $SOURCE_DIR/argonsysinfo.py
+wget "$ARGONDOWNLOADSERVER/scripts/argonpowerbutton-${CHECKGPIOMODE}.py" -O $SOURCE_DIR/argonpowerbutton.py
 
