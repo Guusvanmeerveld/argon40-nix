@@ -7,8 +7,6 @@
   cfg = config.programs.argonone;
 
   package = pkgs.callPackage ../package.nix {};
-
-  pythonInstall = pkgs.python3.withPackages (p: (with p; [i2c-tools smbus2 libgpiod]));
 in {
   options = {
     programs.argonone = {
@@ -46,7 +44,7 @@ in {
         Type = "simple";
         Restart = "always";
         RemainAfterExit = true;
-        ExecStart = "${pythonInstall}/bin/python3 ${package}/lib/share/argononed.py SERVICE";
+        ExecStart = "${package}/bin/argonone SERVICE";
       };
     };
   };
