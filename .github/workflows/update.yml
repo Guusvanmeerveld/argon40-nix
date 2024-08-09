@@ -6,8 +6,13 @@ on:
   workflow_dispatch:
 
 jobs:
-  run-script-and-create-pr:
+  update:
+    name: Check for updates
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      pull-requests: write
 
     steps:
       - name: Checkout Repository
@@ -36,7 +41,7 @@ jobs:
         with:
           branch: bot/update
           delete-branch: true
+
           commit-message: "Auto-update: files have changed"
           title: "Auto-update: files have changed"
           body: "This PR was created automatically by a scheduled GitHub Action."
-          labels: ["auto-update"]
