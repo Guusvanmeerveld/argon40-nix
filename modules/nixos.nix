@@ -28,9 +28,7 @@ in {
             };
           });
 
-          default = [];
-
-          example = [
+          default = [
             {
               temperature = 55;
               speed = 30;
@@ -66,7 +64,7 @@ in {
           ${lib.concatMapStringsSep "\n" ({
             speed,
             temperature,
-          }: "${temperature}=${speed}")
+          }: "${toString temperature}=${toString speed}")
           cfg.settings.fanspeed}
         '';
         mode = "0666";
