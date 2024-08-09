@@ -33,6 +33,8 @@ jobs:
           else
             echo "Changes detected in src directory."
             echo "changed=true" >> $GITHUB_ENV
+            # Capture the diff to include in the PR body
+            git diff src > changes.diff
           fi
 
       - name: Create Pull Request
@@ -44,4 +46,11 @@ jobs:
 
           commit-message: "Auto-update: files have changed"
           title: "Auto-update: files have changed"
-          body: "This PR was created automatically by a scheduled GitHub Action."
+          body: |
+            This PR was created automatically by a scheduled GitHub Action.
+
+            Here are the changes made:
+
+            ```
+            $(cat changes.diff)
+            ```
