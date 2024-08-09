@@ -53,6 +53,8 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
+    environment.systemPackages = [package];
+
     environment.etc = {
       "argonunits.conf" = let
         mappings = {
@@ -69,6 +71,7 @@ in {
         '';
         mode = "0666";
       };
+
       "argononed.conf" = {
         text = ''
           #
