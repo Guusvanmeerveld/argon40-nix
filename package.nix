@@ -1,6 +1,14 @@
-{pkgs, ...}: let
-  pythonPackage = pkgs.stdenv.mkDerivation {
-    pname = "argonone-python";
+{
+  pkgs,
+  lib,
+  disableOled ? true,
+  ...
+}: let
+  pythonPackage = pkgs.stdenv.mkDerivation (let
+    outPath = placeholder "out";
+    pythonFilesDir = "${outPath}/lib/share/";
+  in {
+    pname = "argon40-python";
     version = "1.0";
 
     src = ./.;
@@ -9,25 +17,27 @@
       substituteInPlace src/argonsysinfo.py --replace '/usr/sbin/smartctl' ${pkgs.smartmontools}/bin/smartctl
       substituteInPlace src/argonsysinfo.py --replace '/usr/sbin/hddtemp' ${pkgs.hddtemp}/bin/hddtemp
 
-      substituteInPlace src/argonsysinfo.py --replace 'awk' ${pkgs.gawk}/bin/awk
-      substituteInPlace src/argonsysinfo.py --replace 'lsblk' ${pkgs.util-linux}/bin/lsblk
+      substituteInPlace src/*.py --replace '/etc/argon/' ${pythonFilesDir}
     '';
 
-    installPhase = let
-      outPath = placeholder "out";
-    in ''
-      mkdir -p ${outPath}/lib/share
+    installPhase = ''
+      mkdir -p ${pythonFilesDir}
 
-      cp src/argon*.py ${outPath}/lib/share/
+      cp src/argon*.py ${pythonFilesDir}
+
+      # If the file exists, OLED will be enabled
+      ${lib.optionalString disableOled "rm ${pythonFilesDir}/argoneonoled.py"}
     '';
-  };
+  });
 in
   pkgs.writeShellApplication {
-    name = "argonone";
+    name = "argon40";
 
-    runtimeInputs = [
-      (pkgs.python3.withPackages (p: (with p; [i2c-tools smbus2 libgpiod])))
-    ];
+    runtimeInputs =
+      [
+        (pkgs.python3.withPackages (p: (with p; [i2c-tools smbus2 libgpiod])))
+      ]
+      ++ (with pkgs; [gawk util-linux]);
 
     text = ''
       python3 ${pythonPackage}/lib/share/argononed.py "$@"
