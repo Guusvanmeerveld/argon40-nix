@@ -1,7 +1,6 @@
 {pkgs}: rec {
-  source = pkgs.callPackage ./source.nix {
-    disableOled = false;
-  };
+  source =
+    pkgs.callPackage ./source.nix {};
 
   argononed = pkgs.callPackage ./argononed.nix {
     sourceFilesPackage = source;

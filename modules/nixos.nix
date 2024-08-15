@@ -1,13 +1,11 @@
 {
   lib,
   config,
-  pkgs,
   ...
 }: let
   cfg = config.programs.argon;
 
-  argononed = pkgs.callPackage ../packages/argononed.nix {};
-  argoneond = pkgs.callPackage ../packages/argoneond.nix {};
+  packages = import ../packages;
 in {
   options = {
     programs.argon = {
@@ -16,7 +14,7 @@ in {
 
         package = lib.mkOption {
           type = lib.types.package;
-          default = argononed;
+          default = packages.argononed;
         };
 
         settings = {
@@ -63,7 +61,7 @@ in {
 
         package = lib.mkOption {
           type = lib.types.package;
-          default = argoneond;
+          default = packages.argoneond;
         };
 
         settings = {
