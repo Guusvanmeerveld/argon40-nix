@@ -21,19 +21,15 @@
       };
 
       overlays = {
-        argonone = final: _prev: {
-          argonone = self.packages."${final.system}".default;
+        default = final: _prev: {
+          argononed = self.packages."${final.system}".argononed;
+          argoneond = self.packages."${final.system}".argoneond;
         };
       };
     }
     // flake-utils.lib.eachDefaultSystem (system: let
       pkgs = nixpkgs.legacyPackages.${system};
     in {
-      packages = let
-        package = pkgs.callPackage ./package.nix {};
-      in {
-        argonone = package;
-        default = package;
-      };
+      packages = import ./packages {inherit pkgs;};
     });
 }
