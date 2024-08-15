@@ -86,8 +86,10 @@ in {
     };
   };
 
-  config = lib.mkIf cfg.enable {
-    environment.systemPackages = [cfg.one.package cfg.eon.package];
+  config = {
+    environment.systemPackages =
+      (lib.optional cfg.one.enable cfg.one.package)
+      ++ (lib.optional cfg.eon.enable cfg.eon.package);
 
     environment.etc = {
       "argonunits.conf" = lib.mkIf cfg.one.enable (let
