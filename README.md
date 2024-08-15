@@ -10,7 +10,7 @@ Add the following into the desired `flake.nix` file.
 
 ```nix
 {
-    inputs.argonone-nix.url = "github:guusvanmeerveld/argonone-nix";
+    inputs.argon40-nix.url = "github:guusvanmeerveld/argon40-nix";
 }
 ```
 
@@ -22,7 +22,7 @@ Simply import the NixOS module as follows:
 
 ```nix
 { inputs, ... }: {
-    imports = [inputs.argonone-nix.nixosModules.default];
+    imports = [inputs.argon40-nix.nixosModules.default];
 }
 ```
 
@@ -30,7 +30,7 @@ Simply import the NixOS module as follows:
 
 ```nix
 { inputs, ... }: {
-    imports = [inputs.argonone-nix.nixosModules.default];
+    imports = [inputs.argon40-nix.nixosModules.default];
 
     config = {
         programs.argon.one = {
