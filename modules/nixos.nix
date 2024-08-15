@@ -1,11 +1,12 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }: let
   cfg = config.programs.argon;
 
-  packages = import ../packages;
+  packages = import ../packages {inherit pkgs;};
 in {
   options = {
     programs.argon = {
@@ -87,7 +88,7 @@ in {
   config = {
     environment.systemPackages =
       (lib.optional cfg.one.enable cfg.one.package)
-      ++ (lib.optional cfg.eon.enable cfg.eon.package);
+      ++ lib.optional cfg.eon.enable cfg.eon.package;
 
     environment.etc = {
       "argonunits.conf" = lib.mkIf cfg.one.enable (let
