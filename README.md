@@ -26,14 +26,14 @@ Simply import the NixOS module as follows:
 }
 ```
 
-### Example config
+### Example config for Argon ONE
 
 ```nix
 { inputs, ... }: {
     imports = [inputs.argonone-nix.nixosModules.default];
 
     config = {
-        programs.argonone = {
+        programs.argon.one = {
             enable = true;
 
             settings = {
