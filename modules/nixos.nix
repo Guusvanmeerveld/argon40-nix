@@ -6,7 +6,10 @@
 }: let
   cfg = config.programs.argon;
 
-  packages = import ../packages {inherit pkgs;};
+  packages = import ../packages {
+    inherit pkgs;
+    enableOled = cfg.eon.enable;
+  };
 in {
   options = {
     programs.argon = {
