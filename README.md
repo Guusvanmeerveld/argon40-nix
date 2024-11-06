@@ -74,7 +74,18 @@ Simply import the NixOS module as follows:
     config = {
         programs.argon = {
             # IMPORTANT: Note that the module for the Argon ONE also has to be enabled in order for the OLED screen on the EON to work, since that functionality is part of the Argon ONE service.
-            one.enable = true;
+            one = {
+                enable = true;
+
+                settings = {
+                    oled = {
+                        # Configure what modules will show up on the OLED screen.
+                        screenList = ["clock" "cpu" "storage" "raid" "ram" "temp" "ip"];
+                        # Configure how long it takes to switch between modules.
+                        switchDuration = 30;
+                    };
+                };
+            };
 
             # All this does is enable the RTC service.
             eon.enable = true;
