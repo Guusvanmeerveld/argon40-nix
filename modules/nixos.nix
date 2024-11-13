@@ -265,7 +265,7 @@ in {
             /plugin/;
 
             / {
-              compatible = "brcm,bcm2835";
+              compatible = "brcm,bcm2711";
 
               fragment@0 {
                 target-path = "/";
