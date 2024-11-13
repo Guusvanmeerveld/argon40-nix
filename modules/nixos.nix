@@ -277,7 +277,6 @@ in {
 
                     // pin number, high or low
                     gpios = <&gpio ${toString cfg.one.settings.ir.gpio.pin} 1>;
-                    reg = ;
 
                     // parameter for keymap name
                     linux,rc-map-name = "rc-rc6-mce";
