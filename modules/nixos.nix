@@ -94,7 +94,11 @@ in {
             };
 
             gpio = {
-              disable = lib.mkDisableOption "Enable the overlay that configures the GPIO pins of the RPI correctly";
+              enable = lib.mkOption {
+                type = lib.types.bool;
+                default = true;
+                description = "Enable the overlay that configures the GPIO pins of the RPI correctly";
+              };
 
               pin = lib.mkOption {
                 type = lib.types.int;
@@ -249,7 +253,7 @@ in {
     };
 
     # Configure GPIO overlay for IR receiver.
-    hardware.deviceTree = lib.mkIf (cfg.one.settings.ir.enable && !cfg.one.settings.ir.gpio.disable) {
+    hardware.deviceTree = lib.mkIf (cfg.one.settings.ir.enable && cfg.one.settings.ir.gpio.enable) {
       overlays = [
         # Equivalent to:
         # https://github.com/raspberrypi/linux/blob/rpi-6.1.y/arch/arm/boot/dts/overlays/gpio-ir-overlay.dts
