@@ -570,7 +570,12 @@ if len(sys.argv) > 1:
 		# Starts the power button and temperature monitor threads
 		try:
 			ipcq = Queue()
-			t1 = Thread(target = argonpowerbutton_monitor, args =(ipcq, ))
+			if len(sys.argv) > 2:
+				cmd = sys.argv[2].upper()
+			if cmd == "OLEDSWITCH":
+				t1 = Thread(target = argonpowerbutton_monitorswitch, args =(ipcq, ))
+			else:
+				t1 = Thread(target = argonpowerbutton_monitor, args =(ipcq, ))
 
 			t2 = Thread(target = temp_check)
 			if OLED_ENABLED == True:
@@ -580,6 +585,7 @@ if len(sys.argv) > 1:
 			t2.start()
 			if OLED_ENABLED == True:
 				t3.start()
+
 			ipcq.join()
 		except Exception:
 			sys.exit(1)
