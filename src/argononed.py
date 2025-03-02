@@ -468,6 +468,15 @@ def display_loop(readq):
 				needsUpdate = False
 				# Next page due to error/no data
 				screenjogflag = 1
+		elif curscreen == "logo1v5":
+			# Logo
+			try:
+				oled_loadbg("logo1v5")
+				needsUpdate = True
+			except:
+				needsUpdate = False
+				# Next page due to error/no data
+				screenjogflag = 1
 		else:
 			try:
 				oled_loadbg("bgtime")
