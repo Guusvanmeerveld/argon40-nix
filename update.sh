@@ -10,6 +10,7 @@ echo "Downloading Python source files..."
 
 wget $ARGONDOWNLOADSERVER/scripts/argononed.py -O $SOURCE_DIR/argononed.py $WGET_OPTS
 wget $ARGONDOWNLOADSERVER/scripts/argoneond.py -O $SOURCE_DIR/argoneond.py $WGET_OPTS
+wget $ARGONDOWNLOADSERVER/scripts/argonrtc.py -O $SOURCE_DIR/argonrtc.py $WGET_OPTS
 wget $ARGONDOWNLOADSERVER/scripts/argonregister.py -O $SOURCE_DIR/argonregister.py $WGET_OPTS
 wget $ARGONDOWNLOADSERVER/scripts/argonsysinfo.py -O $SOURCE_DIR/argonsysinfo.py $WGET_OPTS
 wget $ARGONDOWNLOADSERVER/scripts/argoneonoled.py -O $SOURCE_DIR/argoneonoled.py $WGET_OPTS
