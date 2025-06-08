@@ -388,6 +388,25 @@ def setNextAlarm(commandschedulelist, prevdatetime):
 	setRTCAlarm(True, nextcommandtime.weekday(), nextcommandtime.day, nextcommandtime.hour, nextcommandtime.minute)
 	return nextcommandtime
 
+
+def allowshutdown():
+	uptime = 0.0
+	errorflag = False
+	try:
+		cpuctr = 0
+		tempfp = open("/proc/uptime", "r")
+		alllines = tempfp.readlines()
+		for temp in alllines:
+			infolist = temp.split(" ")
+			if len(infolist) > 1:
+				uptime = float(infolist[0])
+				break
+		tempfp.close()
+	except IOError:
+		errorflag = True
+	# 120=2mins minimum up time
+	return uptime > 120
+
 ######
 if len(sys.argv) > 1:
 	cmd = sys.argv[1].upper()
@@ -452,8 +471,9 @@ if len(sys.argv) > 1:
 				nextrtcalarmtime = setNextAlarm(commandschedulelist, nextrtcalarmtime)
 			if len(argonrtc.getCommandForTime(commandschedulelist, tmpcurrenttime, "off")) > 0:
 				# Shutdown detected, issue command then end service loop
-				os.system("shutdown now -h")
-				serviceloop = False
+				if allowshutdown():
+					os.system("shutdown now -h")
+					serviceloop = False
 				# Don't break to sleep while command executes (prevents service to restart)
 
 
